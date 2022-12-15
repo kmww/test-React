@@ -38,8 +38,6 @@ function Counter({ onIncrease, onDecrease }) {
       <br />
       <button onClick={handleIncrease}>+</button>
       <button onClick={handleDecrease}>-</button>
-
-      <div style={{ height: 3000 }}></div>
     </div>
   );
 }
