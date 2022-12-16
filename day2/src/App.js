@@ -5,6 +5,9 @@ import ShowSum from "./components/UseMemo/ShowSum";
 import { useCallback, useState } from "react";
 import Box3 from "./components/ReactMemo/Box3";
 import Checkbox from "./components/UseCallback/Checkbox";
+import useToggle from "./hooks/useToggle";
+import useHover from "./hooks/useHover";
+import useKeyPress from "./hooks/useKeyPress";
 
 const style = css`
   color: hotpink;
@@ -22,6 +25,9 @@ function App() {
   const [foodOn, setFoodOn] = useState(false);
   const [clothesOn, setClothesOn] = useState(false);
   const [shelterOn, setShelterOn] = useState(false);
+  const [on, toggle] = useToggle();
+  const [ref, isHover] = useHover();
+  const keyPressed = useKeyPress("a");
 
   const foodChange = useCallback((e) => setFoodOn(e.target.checked), []);
   const clothesChange = useCallback((e) => setClothesOn(e.target.checked), []);
@@ -45,6 +51,13 @@ function App() {
       <Checkbox label="Food" on={foodOn} onChange={foodChange} />
       <Checkbox label="Clothes" on={clothesOn} onChange={clothesChange} />
       <Checkbox label="Shelter" on={shelterOn} onChange={shelterChange} />
+      {/* custom hook */}
+      <button onClick={toggle}>{on ? "True" : "False"}</button>
+
+      {isHover ? "hover" : "mouseout"}
+      <Box2 ref={ref} />
+
+      {keyPressed && "Pressed"}
     </div>
   );
 }
