@@ -3,6 +3,7 @@ import Box2 from "./components/Box/Box2";
 import { css } from "@emotion/react";
 import ShowSum from "./components/UseMemo/ShowSum";
 import { useState } from "react";
+import Box3 from "./components/ReactMemo/Box3";
 
 const style = css`
   color: hotpink;
@@ -16,6 +17,7 @@ const SomeComponent = ({ children }) => (
 
 function App() {
   const [label, setLabel] = useState("Result");
+  const [count, setCount] = useState(0);
 
   return (
     <div>
@@ -26,6 +28,11 @@ function App() {
       {/* useMemo */}
       <button onClick={() => setLabel(label + ":")}>Change Label</button>
       <ShowSum label={label} n={1000000000} />
+      <br />
+      {/* React.memo */}
+      {count}
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <Box3 />
     </div>
   );
 }
