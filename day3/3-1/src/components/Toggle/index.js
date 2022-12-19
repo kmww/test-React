@@ -13,7 +13,7 @@ const ToggleSwitch = styled.div`
   padding: 2px;
   border-radius: 15px;
   background-color: #ccc;
-  transition: background-color 0.2 ease-out;
+  transition: background-color 0.2s ease-out;
   box-sizing: border-box;
 
   &:after {
