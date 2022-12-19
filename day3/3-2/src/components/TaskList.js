@@ -7,7 +7,7 @@ const UnorderedList = styled.ul`
   padding: 0;
 
   & > li {
-    &:not(:first-child) {
+    &:not(first-child) {
       margin-top: 8px;
     }
   }
@@ -15,7 +15,7 @@ const UnorderedList = styled.ul`
 
 const TaskList = (props) => {
   return (
-    <UnorderedList>
+    <UnorderedList {...props}>
       <Task content="Test1" />
       <Task content="Test2" />
       <Task content="Test3" />
