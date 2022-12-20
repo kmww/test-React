@@ -8,7 +8,7 @@ export default {
 export const Default = () => {
   return (
     <Upload>
-      <button>Click me</button>
+      <button>Click</button>
     </Upload>
   );
 };
@@ -33,7 +33,7 @@ export const Droppable = () => {
             borderColor: dragging ? "black" : "#aaa",
           }}
         >
-          {file ? file.name : "Click or drag file to this area to upload."}
+          {file ? file.name : "Click or drag file to this area to upload"}
         </div>
       )}
     </Upload>

@@ -21,13 +21,12 @@ const Upload = ({
 }) => {
   const [file, setFile] = useState(value);
   const [dragging, setDragging] = useState(false);
-
   const inputRef = useRef(null);
+
   const handleFileChange = (e) => {
     const files = e.target.files;
     const changedFile = files[0];
     setFile(changedFile);
-    console.log("enter");
     onChange && onChange(changedFile);
   };
 
@@ -36,19 +35,16 @@ const Upload = ({
   };
 
   const handleDragEnter = (e) => {
-    console.log("enter");
     if (!droppable) return;
 
-    e.preventDefault();
-    e.stopPropagation(); //부모나 자식 컴포넌트로 인벤트 전파 막는다.
+    e.preventDefault(); // 브라우저 기본 이벤트를 막는다.
+    e.stopPropagation(); // 부모나 자식 컴포넌트로 이벤트가 전파되는 것을 막는다.
 
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
       setDragging(true);
     }
   };
-
   const handleDragLeave = (e) => {
-    console.log("enter");
     if (!droppable) return;
 
     e.preventDefault();
@@ -56,17 +52,13 @@ const Upload = ({
 
     setDragging(false);
   };
-
   const handleDragOver = (e) => {
-    console.log("enter");
     if (!droppable) return;
 
     e.preventDefault();
     e.stopPropagation();
   };
-
   const handleFileDrop = (e) => {
-    console.log("enter");
     if (!droppable) return;
 
     e.preventDefault();
