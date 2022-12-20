@@ -3,7 +3,7 @@ import React from "react";
 const AvatarGroup = ({ children, shape = "circle", size = 70, ...props }) => {
   const avatars = React.Children.toArray(children)
     .filter((element) => {
-      if (React.isValidElement(element) ** element.props._TYPE === "Avatar") {
+      if (React.isValidElement(element) && element.props._TYPE === "Avatar") {
         return true;
       }
 

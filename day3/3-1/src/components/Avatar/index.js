@@ -64,9 +64,9 @@ Avatar.defaultProps = {
   _TYPE: "Avatar",
 };
 
-Avatar.propTypes = {
-  _TYPE: "Avatar",
-};
+// Avatar.propTypes = {
+//   _TYPE: "Avatar",
+// };
 
 Avatar.Group = AvatarGroup;
 
