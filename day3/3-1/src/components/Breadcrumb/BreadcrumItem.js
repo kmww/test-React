@@ -1,6 +1,7 @@
 import Text from "../Text/Text";
 import styled from "@emotion/styled";
 import Icon from "../Icon";
+import PropTypes from "prop-types";
 
 const BreadcrumbItemContainer = styled.div`
   display: flex;
@@ -29,8 +30,8 @@ BreadcrumbItem.defaultProps = {
   __TYPE: "BreadcrumbItem",
 };
 
-// BreadcrumbItem.propTypes = {
-//   __TYPE: "BreadcrumbItem",
-// };
+BreadcrumbItem.propTypes = {
+  __TYPE: PropTypes.oneOf(["BreadcrumbItem"]),
+};
 
 export default BreadcrumbItem;
