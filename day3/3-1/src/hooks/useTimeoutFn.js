@@ -1,6 +1,6 @@
 const { useRef, useEffect, useCallback } = require("react");
 
-const useTimoutFn = (fn, ms) => {
+const useTimeoutFn = (fn, ms) => {
   const timeoutId = useRef();
   const callback = useRef();
 
@@ -25,4 +25,4 @@ const useTimoutFn = (fn, ms) => {
   return [run, clear];
 };
 
-export default useTimoutFn;
+export default useTimeoutFn;
