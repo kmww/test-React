@@ -1,0 +1,155 @@
+/*
+const hotkeys = [
+  {
+    global: true,
+    combo: "ctrl+shift+k",
+    onkeydown: (e) => {
+      alert("ctrl+k");
+    },
+  },
+];
+*/
+
+import { useCallback, useEffect, useMemo } from "react";
+
+const ModifierBitMasks = {
+  alt: 1,
+  ctrl: 2,
+  meta: 4,
+  shift: 8,
+};
+
+const ShiftKeys = {
+  "~": "`",
+  "!": "1",
+  "@": "2",
+  "#": "3",
+  $: "4",
+  "%": "5",
+  "^": "6",
+  "&": "7",
+  "*": "8",
+  "(": "9",
+  ")": "0",
+  _: "-",
+  "+": "=",
+  "{": "[",
+  "}": "]",
+  "|": "\\",
+  ":": ";",
+  '"': "'",
+  "<": ",",
+  ">": ".",
+  "?": "/",
+};
+
+const Aliases = {
+  win: "meta",
+  window: "meta",
+  cmd: "meta",
+  command: "meta",
+  esc: "escape",
+  opt: "alt",
+  option: "alt",
+};
+
+const getKeyCombo = (e) => {
+  const key = e.target !== " " ? e.key.toLowerCase() : "space";
+  let modifiers = 0;
+  if (e.altKey) modifiers += ModifierBitMasks.alt;
+  if (e.ctrlKey) modifiers += ModifierBitMasks.ctrl;
+  if (e.metaKey) modifiers += ModifierBitMasks.meta;
+  if (e.shiftKey) modifiers += ModifierBitMasks.shift;
+
+  return { modifiers, key };
+};
+
+const comboMatches = (a, b) => {
+  return a.modifiers === b.modifiers && a.key === b.key;
+};
+
+const parseKeyCombo = (combo) => {
+  const pieces = combo.replace(/\s/g, "").toLowerCase().split("+");
+  let modifiers = 0;
+  let key;
+  for (const piece of pieces) {
+    if (ModifierBitMasks[piece]) {
+      modifiers += ModifierBitMasks[piece];
+    } else if (ShiftKeys[piece]) {
+      modifiers += ModifierBitMasks.shift;
+      key = ShiftKeys[piece];
+    } else if (Aliases[piece]) {
+      key = Aliases[piece];
+    } else {
+      key = piece;
+    }
+  }
+  return { modifiers, key };
+};
+
+const useHotkey = (hotkeys) => {
+  const localKeys = useMemo(() => hotkeys.filter((k) => !k.global), [hotkeys]);
+  const globalKeys = useMemo(() => hotkeys.filter((k) => k.global), [hotkeys]);
+
+  const invokeCallback = useCallback(
+    (global, combo, callbackName, e) => {
+      for (const hotkey of global ? globalKeys : localKeys) {
+        // 단축키 처리...
+        // callbackName: onKeyDown, onKeyUp
+        if (comboMatches(parseKeyCombo(hotkey.combo), combo)) {
+          hotkey[callbackName] && hotkey[callbackName](e);
+        }
+      }
+    },
+    [localKeys, globalKeys]
+  );
+
+  const handleGlobalKeyDown = useCallback(
+    (e) => {
+      invokeCallback(true, getKeyCombo(e), "onKeyDown", e);
+    },
+    [invokeCallback]
+  );
+  const handleGlobalKeyUp = useCallback(
+    (e) => {
+      invokeCallback(true, getKeyCombo(e), "onKeyUp", e);
+    },
+    [invokeCallback]
+  );
+  const handleLocalKeyDown = useCallback(
+    (e) => {
+      invokeCallback(
+        false,
+        getKeyCombo(e.nativeEvent),
+        "onKeyDown",
+        e.nativeEvent
+      );
+    },
+    [invokeCallback]
+  );
+  const handleLocalKeyUp = useCallback(
+    (e) => {
+      invokeCallback(
+        false,
+        getKeyCombo(e.nativeEvent),
+        "onKeyUp",
+        e.nativeEvent
+      );
+    },
+    [invokeCallback]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    window.addEventListener("keyup", handleGlobalKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleGlobalKeyDown);
+      window.removeEventListener("keyup", handleGlobalKeyUp);
+    };
+  }, [handleGlobalKeyDown, handleGlobalKeyUp]);
+
+  return { handleKeyDown: handleLocalKeyDown, handleKeyUp: handleLocalKeyUp };
+};
+
+export default useHotkey;
