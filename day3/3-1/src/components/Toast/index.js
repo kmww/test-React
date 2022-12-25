@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import ToastManager from "./ToastManager";
 
 class Toast {
   portal = null;
@@ -16,7 +17,14 @@ class Toast {
       document.body.appendChild(this.portal);
     }
 
-    ReactDOM.createPortal(undefined, this.portal);
+    ReactDOM.render(
+      <ToastManager
+        bind={(createToast) => {
+          this.createToast = createToast;
+        }}
+      />,
+      this.portal
+    );
   }
 
   show(message, duration = 2000) {

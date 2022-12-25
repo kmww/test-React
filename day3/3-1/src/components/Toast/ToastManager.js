@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { v4 } from "uuid";
+import ToastItem from "./ToastItem";
 
-const ToastManager = () => {
+const ToastManager = ({ bind }) => {
   const [toasts, setToasts] = useState([]);
 
   const createToast = useCallback((message, duration) => {
@@ -25,7 +26,6 @@ const ToastManager = () => {
     <div>
       {toasts.map(({ id, message, duration }) => (
         <ToastItem
-          id={id}
           message={message}
           duration={duration}
           key={id}
