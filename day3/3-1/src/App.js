@@ -1,7 +1,6 @@
 import axios from "axios";
-import useAsync from "./hooks/useAsync";
-import Header from "./components/Header";
-import Spinner from "./components/Spinner";
+import { useAsync } from "./hooks";
+import { Header, Spinner } from "./components";
 
 function App() {
   const initialPosts = useAsync(async () => {
