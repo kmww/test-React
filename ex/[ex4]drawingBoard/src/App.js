@@ -1,6 +1,10 @@
 import { useState } from "react";
 import Paint from "./components/Paint";
-import { EraserPlugin, PenPlugin } from "./components/Paint/plugins";
+import {
+  DashPlugin,
+  EraserPlugin,
+  PenPlugin,
+} from "./components/Paint/plugins";
 
 function App() {
   const [command, setCommand] = useState("pen");
@@ -11,6 +15,7 @@ function App() {
       <div>
         <button onClick={() => setCommand("pen")}>Pen</button>
         <button onClick={() => setCommand("eraser")}>Eraser</button>
+        <button onClick={() => setCommand("dash")}>Dash</button>
         <input
           type="range"
           min={1}
@@ -24,7 +29,7 @@ function App() {
         command={command}
         lineWidth={lineWidth}
         color={color}
-        plugins={[new PenPlugin(), new EraserPlugin()]}
+        plugins={[new PenPlugin(), new EraserPlugin(), new DashPlugin()]}
         style={{ border: "1px solid black" }}
       />
     </div>
