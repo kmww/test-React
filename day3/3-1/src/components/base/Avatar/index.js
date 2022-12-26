@@ -1,4 +1,4 @@
-import ImageComponent from "../../Image";
+import ImageComponent from "../Image";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import AvatarGroup from "./AvatarGroup";
