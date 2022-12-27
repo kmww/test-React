@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Toggle from "./Toggle";
 
 interface Props {
   id?: string;
@@ -9,6 +10,7 @@ interface Props {
 const Task = ({ id, content, complete, ...props }: Props) => {
   return (
     <ListItem {...props}>
+      <Toggle on={complete} />
       <Content complete={complete}>{content}</Content>
       <RemoveButton>Remove</RemoveButton>
     </ListItem>
