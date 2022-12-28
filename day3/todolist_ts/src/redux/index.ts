@@ -1,9 +1,9 @@
 import { tasks } from "./tasks";
-import { applyMiddleware, combineReducers, createStore } from "redux";
+import { combineReducers } from "redux";
 import logger from "redux-logger";
-import { composeWithDevTools } from "redux-devtools-extension";
 import session from "redux-persist/lib/storage/session";
 import { persistReducer, persistStore } from "redux-persist";
+import { configureStore } from "@reduxjs/toolkit";
 
 const persistConfig = {
   key: "root",
@@ -15,11 +15,12 @@ const combinedReducer = combineReducers({ tasks });
 
 const rootReducer = persistReducer(persistConfig, combinedReducer);
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(logger))
-);
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: [logger],
+  devTools: true
+})
 
 export const persistor = persistStore(store as any);
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
