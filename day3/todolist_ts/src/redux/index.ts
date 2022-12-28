@@ -11,15 +11,15 @@ const persistConfig = {
   whitelist: ["tasks"],
 };
 
-const combinedReducer = combineReducers({ tasks });
+const combinedReducer = combineReducers({ tasks: tasks.reducer });
 
 const rootReducer = persistReducer(persistConfig, combinedReducer);
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: [logger],
-  devTools: true
-})
+  devTools: true,
+});
 
 export const persistor = persistStore(store as any);
 
