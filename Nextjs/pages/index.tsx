@@ -3,12 +3,9 @@ import Link from "next/link";
 import { Post } from "../interfaces";
 
 export const getServerSideProps = async () => {
-  const { data: posts } = await axios.get(
-    "https://jsonplaceholder.typicode.com/posts",
-    {
-      headers: { "Accept-Encoding": "gzip,deflate,compress" },
-    }
-  );
+  const { data: posts } = await axios.get("http://localhost:3000/api/posts", {
+    headers: { "Accept-Encoding": "gzip,deflate,compress" },
+  });
 
   return {
     props: { posts },
