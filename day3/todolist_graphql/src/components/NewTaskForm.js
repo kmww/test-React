@@ -1,4 +1,6 @@
+import { gql, useMutation } from "@apollo/client";
 import styled from "@emotion/styled";
+import { useCallback, useState } from "react";
 
 const Form = styled.form`
   width: 400px;
@@ -26,10 +28,37 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
+const CREATE_TASK = gql`
+  mutation CreateTask($content: String!) {
+    createTask(data: { content: $content, complete: false }) {
+      data {
+        id
+      }
+    }
+  }
+`;
+
 export const NewTaskForm = () => {
+  const [task, setTask] = useState("");
+  const [createTask] = useMutation(CREATE_TASK);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      createTask({ variables: { content: task } });
+      setTask("");
+    },
+    [createTask, task]
+  );
+
   return (
-    <Form>
-      <Input type="text" placeholder="Add Task" />
+    <Form onSubmit={handleSubmit}>
+      <Input
+        type="text"
+        value={task}
+        placeholder="Add Task"
+        onChange={(e) => setTask(e.target.value)}
+      />
       <SubmitButton>Add</SubmitButton>
     </Form>
   );
