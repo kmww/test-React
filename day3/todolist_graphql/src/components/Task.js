@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, useApolloClient, useMutation } from "@apollo/client";
 import styled from "@emotion/styled";
 
 const ListItem = styled.li`
@@ -43,6 +43,7 @@ const DELETE_TASK = gql`
 `;
 
 export const Task = ({ id, content, complete }) => {
+  const client = useApolloClient();
   const [deleteTask] = useMutation(DELETE_TASK);
 
   return (
@@ -51,6 +52,7 @@ export const Task = ({ id, content, complete }) => {
       <RemoveButton
         onClick={() => {
           deleteTask({ variables: { id } });
+          client.refetchQueries({ include: ["GetTasks"] });
         }}
       >
         Remove
