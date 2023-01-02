@@ -1,3 +1,4 @@
+import { gql, useMutation } from "@apollo/client";
 import styled from "@emotion/styled";
 
 const ListItem = styled.li`
@@ -20,10 +21,40 @@ const Content = styled.span`
   text-decoration: ${({ complete }) => (complete ? "line-through" : "none")};
 `;
 
+const RemoveButton = styled.button`
+  width: 60px;
+  height: 24px;
+  margin-left: 8px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  background-color: red;
+  cursor: pointer;
+`;
+
+const DELETE_TASK = gql`
+  mutation DeleteTask($id: ID!) {
+    deleteTask(id: $id) {
+      data {
+        id
+      }
+    }
+  }
+`;
+
 export const Task = ({ id, content, complete }) => {
+  const [deleteTask] = useMutation(DELETE_TASK);
+
   return (
     <ListItem>
       <Content complete={complete}>{content}</Content>
+      <RemoveButton
+        onClick={() => {
+          deleteTask({ variables: { id } });
+        }}
+      >
+        Remove
+      </RemoveButton>
     </ListItem>
   );
 };
