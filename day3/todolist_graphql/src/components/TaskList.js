@@ -5,6 +5,7 @@ import { Task } from "./Task";
 const UnorderedList = styled.ul`
   width: 400px;
   margin: 0;
+  margin-top: 16px;
   padding: 0;
 
   & > li {
